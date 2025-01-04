@@ -32,6 +32,7 @@ const onDocumentKeydown = (evt) => {
 
 function showPreview() {
   imgUploadOverlay.classList.remove('hidden');
+  previewImg.src = URL.createObjectURL(imgUploadInput.files[0]);
 
   document.addEventListener('keydown', onDocumentKeydown);
   body.classList.add('modal-open');
