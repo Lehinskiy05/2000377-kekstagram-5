@@ -74,16 +74,19 @@ export function updateEffect() {
     start: range[1]
   });
 
+  effectLevelSlider.noUiSlider.on('update', (values, handle) => {
+    const value = values[handle];
+    effectLevelValue.value = toString(parseFloat(value, 10));
+    if (currentEffect !== 'none') {
+      previewImg.style.filter = `${filter}(${value}${unit})`;
+    }
+  });
+
   if (currentEffect === 'none') {
     effectLevelContainer.classList.add('hidden');
     previewImg.style.filter = '';
   } else {
     effectLevelContainer.classList.remove('hidden');
-    effectLevelSlider.noUiSlider.on('update', (values, handle) => {
-      const value = values[handle];
-      effectLevelValue.value = Math.round(value);
-      previewImg.style.filter = `${filter}(${value}${unit})`;
-    });
   }
 }
 
