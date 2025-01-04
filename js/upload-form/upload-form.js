@@ -13,6 +13,7 @@ const descriptionInput = imgUploadForm.querySelector('.text__description');
 const hashtagsInput = imgUploadForm.querySelector('.text__hashtags');
 const scaleControlInput = imgUploadForm.querySelector('.scale__control--value');
 const effectLevelRadios = imgUploadForm.querySelectorAll('.effects__radio');
+const effectsPreview = imgUploadForm.querySelectorAll('.effects__preview');
 const submitButton = imgUploadForm.querySelector('.img-upload__submit');
 
 const message = {
@@ -33,6 +34,12 @@ const onDocumentKeydown = (evt) => {
 function showPreview() {
   imgUploadOverlay.classList.remove('hidden');
 
+  const imgURL = URL.createObjectURL(imgUploadInput.files[0]);
+  previewImg.src = imgURL;
+  for (const miniature of effectsPreview) {
+    miniature.style.backgroundImage = `url(${ imgURL.toString() })`;
+  }
+
   document.addEventListener('keydown', onDocumentKeydown);
   body.classList.add('modal-open');
 }
@@ -48,6 +55,10 @@ function closePreview () {
   scaleControlInput.value = '100%';
   effectLevelRadios[0].checked = true;
   updateEffect();
+
+  document.querySelectorAll('.pristine-error').forEach((errorMessage) => {
+    errorMessage.remove();
+  });
 
 
   document.removeEventListener('keydown', onDocumentKeydown);

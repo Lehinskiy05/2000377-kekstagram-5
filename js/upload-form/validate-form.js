@@ -25,24 +25,37 @@ function getErrorMessage() {
 
 function isInvalidHashtag(inputValue) {
   const hashtagRegex = /(^|\s)(#[A-Za-zА-Яа-яёЁ0-9]{1,19})(?=\s|$)/g;
+
   if (inputValue === '') {
     return false;
   }
+
   const hashtags = inputValue.match(hashtagRegex);
+
   if (!hashtags) {
     return true;
   }
+
+  // Регистр
+  const uniqueHashtags = new Set(hashtags.map((tag) => tag.trim().toLowerCase()));
+
+  if (uniqueHashtags.size !== hashtags.length) {
+    return true;
+  }
+
   const nonHashtagPatterns = [
     /(^|\s)([A-Za-zА-Яа-яёЁ0-9]+)/,
     /[^ ]#/,
     /# /,
     /#$/
   ];
+
   for (const nonPattern of nonHashtagPatterns) {
     if (nonPattern.test(inputValue)) {
       return true;
     }
   }
+
   return false;
 }
 
