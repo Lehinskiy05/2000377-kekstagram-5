@@ -37,7 +37,7 @@ function isInvalidHashtag(inputValue) {
   }
 
   // Регистр
-  const uniqueHashtags = new Set(hashtags.map(tag => tag.trim().toLowerCase()));
+  const uniqueHashtags = new Set(hashtags.map((tag) => tag.trim().toLowerCase()));
 
   if (uniqueHashtags.size !== hashtags.length) {
     return true;

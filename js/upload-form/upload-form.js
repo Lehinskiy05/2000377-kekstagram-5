@@ -58,7 +58,7 @@ function closePreview () {
 
   document.querySelectorAll('.pristine-error').forEach((errorMessage) => {
     errorMessage.remove();
-});
+  });
 
 
   document.removeEventListener('keydown', onDocumentKeydown);
