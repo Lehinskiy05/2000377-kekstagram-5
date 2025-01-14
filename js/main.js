@@ -3,6 +3,8 @@ import {renderMiniatures} from './miniature-draw.js';
 import { initFilters } from './filters.js';
 import './upload-form/upload-form.js';
 
+const GET_DATA_ERROR_MESSAGE_TIMEOUT = 10000;
+
 
 getData()
   .then((data) => {
@@ -19,6 +21,13 @@ getData()
 
 
 function showGetDataErrorMessage() {
-  const errorMessage = document.querySelector('.get-data-error-message');
-  errorMessage.classList.remove('hidden');
+  const errorMessage = document.createElement('div');
+  errorMessage.classList.add('get-data-error-message');
+  errorMessage.textContent = 'Не удалось загрузить данные. Пожалуйста, перезагрузите страницу';
+
+  document.querySelector('main').insertAdjacentElement('afterbegin', errorMessage);
+
+  setTimeout(() => {
+    errorMessage.remove();
+  }, GET_DATA_ERROR_MESSAGE_TIMEOUT);
 }
