@@ -2,17 +2,9 @@ import { getData } from './api.js';
 import {renderMiniatures} from './miniature-draw.js';
 import { initFilters } from './filters.js';
 import './upload-form/upload-form.js';
-import { createPhotoDescriptions } from './data.js';
 
 
 getData()
-  .catch(() => {
-    // eslint-disable-next-line no-console
-    console.warn('Не удалось загрузить данные, взяты картинки по умолчанию');
-    return new Promise((resolve) => {
-      resolve(createPhotoDescriptions());
-    });
-  })
   .then((data) => {
     renderMiniatures(data);
     return data;
@@ -22,5 +14,11 @@ getData()
     initFilters(data);
   })
   .catch((error) => {
-    throw new Error(error);
+    showGetDataErrorMessage(error.message);
   });
+
+
+function showGetDataErrorMessage() {
+  const errorMessage = document.querySelector('.get-data-error-message');
+  errorMessage.classList.remove('hidden');
+}
